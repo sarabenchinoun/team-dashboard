@@ -1,6 +1,7 @@
 import { http, HttpResponse } from "msw";
 import * as z from "zod";
 
+import { CreateTicket } from "@/lib/queries/tickets";
 import { db } from "@/mock-db/db";
 import { mockApi } from "./browser";
 
@@ -36,5 +37,26 @@ export const ticketsHandlers = [
 			},
 			tickets: tickets ?? [],
 		});
+	}),
+	http.post(mockApi("/tickets"), async ({ request }) => {
+		const body = CreateTicket.parse(await request.json());
+
+		const ticket = db.ticket.create({
+			user: body.user,
+			issue: body.issue,
+			description: body.description,
+			status: body.status,
+		});
+
+		if (!ticket) {
+			return HttpResponse.json(
+				{
+					message: "Ticket not created",
+				},
+				{ status: 400 },
+			);
+		}
+
+		return HttpResponse.json(ticket);
 	}),
 ];

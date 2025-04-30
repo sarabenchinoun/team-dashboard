@@ -12,6 +12,7 @@ import { routeTree } from "./routeTree.gen";
 
 import "./tailwind.css";
 import { Icon } from "./components/icon";
+import { Toaster } from "./components/ui/sonner";
 import { seed } from "./mock-db/seed";
 
 const queryClient = new QueryClient();
@@ -70,6 +71,7 @@ if (!rootElement.innerHTML) {
 			<StrictMode>
 				<QueryClientProvider client={queryClient}>
 					<RouterProvider router={router} />
+					<Toaster />
 				</QueryClientProvider>
 			</StrictMode>,
 		);

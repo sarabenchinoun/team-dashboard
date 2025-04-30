@@ -38,3 +38,31 @@ export const ticketsQuery = (params: Partial<PageParams> = {}) =>
 		queryKey: ["tickets", params],
 		queryFn: () => getTickets(params),
 	});
+
+export const CreateTicket = z.object({
+	user: z.string().email(),
+	issue: z.string().min(1, "Issue is required"),
+	description: z.string().min(1, "Description is required"),
+	status: z.string().min(1, "Status is required"),
+	// file: z.instanceof(File).optional(),
+});
+export type CreateTicketProps = z.infer<typeof CreateTicket>;
+
+export async function postTicket(body: CreateTicketProps) {
+	const res = await fetch("/api/v1/tickets", {
+		method: "POST",
+		body: JSON.stringify({
+			user: body.user,
+			issue: body.issue,
+			description: body.description,
+			status: body.status,
+			// file: body.file,
+		}),
+	});
+	if (!res.ok) {
+		throw new Error("Network response was not ok");
+	}
+
+	const json = await res.json();
+	return json;
+}

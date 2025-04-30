@@ -6,6 +6,7 @@ import {
 	LoaderCircle,
 	type LucideProps,
 	Ticket,
+	TriangleAlert,
 	Users,
 } from "lucide-react";
 
@@ -16,6 +17,7 @@ const Icons = {
 	ticket: Ticket,
 	"list-todo": ListTodo,
 	"loader-circle": LoaderCircle,
+	"triangle-alert": TriangleAlert,
 };
 export interface IconProps extends LucideProps {
 	name: keyof typeof Icons;
