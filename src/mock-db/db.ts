@@ -5,6 +5,11 @@ const asscendingId = (() => {
 	return () => id++;
 })();
 
+const asscendingTicketId = (() => {
+	let id = 100;
+	return () => id++;
+})();
+
 export const db = factory({
 	member: {
 		id: primaryKey(asscendingId),
@@ -16,7 +21,20 @@ export const db = factory({
 		device: String,
 		last_login: () => new Date().toISOString(),
 		created_at: () => new Date().toISOString(),
-		updated_at: () => new Date().toISOString(),
+	},
+	ticket: {
+		id: primaryKey(asscendingTicketId),
+		user: String,
+		issue: String,
+		description: String,
+		status: String,
+		created_at: () => new Date().toISOString(),
+	},
+	todo: {
+		id: primaryKey(asscendingId),
+		title: String,
+		completed: Boolean,
+		created_at: () => new Date().toISOString(),
 	},
 });
 

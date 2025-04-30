@@ -1,16 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
+import { membersQuery } from "@/lib/queries/staff";
+
 export const Route = createFileRoute("/staff-directory")({
-	loader: async () => {
-		const res = await fetch("/api/v1/staff");
-		const json = await res.json();
-		return json;
-	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const staff = Route.useLoaderData();
+	const staff = useQuery(membersQuery());
 
 	return (
 		<>

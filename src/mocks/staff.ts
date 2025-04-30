@@ -1,5 +1,6 @@
-import { db } from "@/mock-db/db";
 import { http, HttpResponse } from "msw";
+
+import { db } from "@/mock-db/db";
 import { mockApi } from "./browser";
 
 export const staffHandlers = [

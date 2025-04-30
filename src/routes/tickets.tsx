@@ -1,9 +1,19 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/tickets')({
-  component: RouteComponent,
-})
+import { ticketsQuery } from "@/lib/queries/tickets";
+
+export const Route = createFileRoute("/tickets")({
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <div>Hello "/tickets"!</div>
+	const tickets = useQuery(ticketsQuery());
+
+	return (
+		<>
+			<div>Hello "/tickets"!</div>
+			<div>{JSON.stringify(tickets, null, 2)}</div>
+		</>
+	);
 }

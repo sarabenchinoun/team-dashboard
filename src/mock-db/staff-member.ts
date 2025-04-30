@@ -34,6 +34,7 @@ const createMember: Insert<"member"> = (overrides) =>
 			"Mac Mini",
 			"iPad",
 		]),
+		created_at: faker.date.past().toISOString(),
 		...overrides,
 	});
 

@@ -1,14 +1,11 @@
-import { faker } from "@faker-js/faker";
 import { http, HttpResponse } from "msw";
 
+import { db } from "@/mock-db/db";
+import { mockApi } from "./browser";
+
 export const todosHandlers = [
-	http.get("/todos", () => {
-		return HttpResponse.json({
-			id: crypto.randomUUID(),
-			title: faker.lorem.sentence(),
-			completed: faker.datatype.boolean(),
-			created_at: faker.date.past().toISOString(),
-			updated_at: faker.date.recent().toISOString(),
-		});
+	http.get(mockApi("/todos"), () => {
+		const todos = db.todo.getAll();
+		return HttpResponse.json({ todos: todos ?? [] });
 	}),
 ];

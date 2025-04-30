@@ -1,9 +1,19 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/todo-list')({
-  component: RouteComponent,
-})
+import { todosQuery } from "@/lib/queries/todos";
+
+export const Route = createFileRoute("/todo-list")({
+	component: RouteComponent,
+});
 
 function RouteComponent() {
-  return <div>Hello "/todo-list"!</div>
+	const todos = useQuery(todosQuery());
+
+	return (
+		<>
+			<div>Hello "/todo-list"!</div>
+			<div>{JSON.stringify(todos, null, 2)}</div>
+		</>
+	);
 }

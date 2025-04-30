@@ -3,6 +3,7 @@ import {
 	CircleHelp,
 	House,
 	ListTodo,
+	LoaderCircle,
 	type LucideProps,
 	Ticket,
 	Users,
@@ -14,6 +15,7 @@ const Icons = {
 	"circle-help": CircleHelp,
 	ticket: Ticket,
 	"list-todo": ListTodo,
+	"loader-circle": LoaderCircle,
 };
 export interface IconProps extends LucideProps {
 	name: keyof typeof Icons;
