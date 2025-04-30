@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 
 import "./tailwind.css";
+import { seed } from "./mock-db/seed";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -16,13 +17,26 @@ declare module "@tanstack/react-router" {
 	}
 }
 
+async function enableMocking() {
+	const { worker } = await import("./mocks/browser");
+	seed();
+
+	// `worker.start()` returns a Promise that resolves
+	// once the Service Worker is up and ready to intercept requests.
+	return worker.start({
+		onUnhandledRequest: "bypass",
+	});
+}
+
 // Render the app
 const rootElement = document.getElementById("root") as HTMLElement;
 if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
-	root.render(
-		<StrictMode>
-			<RouterProvider router={router} />
-		</StrictMode>,
-	);
+	enableMocking().then(() => {
+		root.render(
+			<StrictMode>
+				<RouterProvider router={router} />
+			</StrictMode>,
+		);
+	});
 }

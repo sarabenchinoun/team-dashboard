@@ -14,7 +14,7 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { navigationItems } from "@/lib/config";
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 export const Route = createRootRoute({
@@ -68,24 +68,6 @@ export const Route = createRootRoute({
 					</div>
 				</SidebarInset>
 			</SidebarProvider>
-			<div className="flex gap-2 p-2">
-				<Link to="/" className="[&.active]:font-bold">
-					Home
-				</Link>
-				<Link to="/staff-directory" className="[&.active]:font-bold">
-					Staff Directory
-				</Link>
-				<Link to="/it-request" className="[&.active]:font-bold">
-					IT Request
-				</Link>
-				<Link to="/tickets" className="[&.active]:font-bold">
-					Tickets
-				</Link>
-				<Link to="/todo-list" className="[&.active]:font-bold">
-					Todo List
-				</Link>
-			</div>
-			<hr />
 		</>
 	),
 });
