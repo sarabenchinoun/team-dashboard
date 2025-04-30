@@ -4,6 +4,6 @@ import { createTodo } from "./todo";
 
 export async function seed() {
 	Array.from({ length: 30 }, () => createMember());
-	Array.from({ length: 10 }, () => createTicket());
+	Array.from({ length: 30 }, () => createTicket());
 	Array.from({ length: 10 }, () => createTodo());
 }

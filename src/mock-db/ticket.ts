@@ -43,10 +43,10 @@ const createTicket = (overrides: Partial<Ticket> = {}) =>
 	db.ticket.create({
 		user: faker.internet.email(),
 		issue: faker.helpers.arrayElement(issuetypes.map((i) => i.value)),
-		description: faker.lorem.paragraph(),
+		description: faker.lorem.sentence(),
 		status: faker.helpers.arrayElement(ticketStatuses.map((s) => s.value)),
 		created_at: faker.date.past().toISOString(),
 		...overrides,
 	});
 
-export { createTicket, issuetypes, ticketStatuses };
+export { createTicket, issuetypes, ticketStatuses, type Ticket };
