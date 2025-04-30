@@ -37,12 +37,3 @@ export const db = factory({
 		created_at: () => new Date().toISOString(),
 	},
 });
-
-export type DB = typeof db;
-type Table = keyof DB;
-type Action = keyof DB[Table];
-type Payload<T extends Table, A extends Action> = Parameters<DB[T][A]>[0];
-
-export type Insert<T extends Table> = (
-	payload?: Partial<Payload<T, "create">>,
-) => NonNullable<ReturnType<DB[T]["create"]>>;

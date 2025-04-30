@@ -1,5 +1,7 @@
 import { faker } from "@faker-js/faker/locale/en_GB";
-import { type Insert, db } from "./db";
+
+import * as z from "zod";
+import { db } from "./db";
 
 const jobTitles = [
 	"Managing Director",
@@ -19,7 +21,20 @@ const jobTitles = [
 	"Video Producer",
 ];
 
-const createMember: Insert<"member"> = (overrides) =>
+const Member = z.object({
+	id: z.number(),
+	name: z.string(),
+	role: z.string(),
+	email: z.string().email(),
+	status: z.string(),
+	last_login: z.string(),
+	drive_usage: z.number(),
+	device: z.string(),
+	created_at: z.string(),
+});
+type Member = z.infer<typeof Member>;
+
+const createMember = (overrides: Partial<Member> = {}) =>
 	db.member.create({
 		name: faker.person.fullName(),
 		role: faker.helpers.arrayElement(jobTitles),

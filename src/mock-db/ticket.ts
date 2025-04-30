@@ -1,5 +1,7 @@
 import { faker } from "@faker-js/faker/locale/en_GB";
-import { type Insert, db } from "./db";
+import * as z from "zod";
+
+import { db } from "./db";
 
 const issuetypes = [
 	{
@@ -26,7 +28,18 @@ const ticketStatuses = [
 	{ value: "resolved", label: "Resolved" },
 ];
 
-const createTicket: Insert<"ticket"> = (overrides) =>
+const Ticket = z.object({
+	id: z.number(),
+	user: z.string().email(),
+	issue: z.string(),
+	description: z.string(),
+	status: z.string(),
+	created_at: z.string(),
+});
+
+type Ticket = z.infer<typeof Ticket>;
+
+const createTicket = (overrides: Partial<Ticket> = {}) =>
 	db.ticket.create({
 		user: faker.internet.email(),
 		issue: faker.helpers.arrayElement(issuetypes.map((i) => i.value)),
