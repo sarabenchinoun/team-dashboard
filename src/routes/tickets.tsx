@@ -8,7 +8,12 @@ export const Route = createFileRoute("/tickets")({
 });
 
 function RouteComponent() {
-	const tickets = useQuery(ticketsQuery());
+	const tickets = useQuery(
+		ticketsQuery({
+			pageIndex: 1,
+			pageSize: 5,
+		}),
+	);
 
 	return (
 		<>

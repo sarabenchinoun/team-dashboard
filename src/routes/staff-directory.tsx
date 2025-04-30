@@ -8,7 +8,12 @@ export const Route = createFileRoute("/staff-directory")({
 });
 
 function RouteComponent() {
-	const staff = useQuery(membersQuery());
+	const staff = useQuery(
+		membersQuery({
+			pageIndex: 1,
+			pageSize: 5,
+		}),
+	);
 
 	return (
 		<>
