@@ -26,9 +26,9 @@ const Member = z.object({
 	name: z.string(),
 	role: z.string(),
 	email: z.string().email(),
-	status: z.string(),
+	status: z.boolean(),
 	last_login: z.string(),
-	drive_usage: z.number(),
+	drive_usage: z.string(),
 	device: z.string(),
 	created_at: z.string(),
 });
@@ -39,9 +39,9 @@ const createMember = (overrides: Partial<Member> = {}) =>
 		name: faker.person.fullName(),
 		role: faker.helpers.arrayElement(jobTitles),
 		email: faker.internet.email(),
-		status: faker.helpers.arrayElement(["active", "inactive"]),
+		status: faker.datatype.boolean(),
 		last_login: faker.date.recent().toISOString(),
-		drive_usage: faker.number.int({ min: 0, max: 100 }),
+		drive_usage: `${faker.number.float({ min: 0.1, max: 100 }).toFixed(1)} GB`,
 		device: faker.helpers.arrayElement([
 			"Macbook Pro",
 			"Macbook Air",
@@ -53,4 +53,4 @@ const createMember = (overrides: Partial<Member> = {}) =>
 		...overrides,
 	});
 
-export { createMember };
+export { createMember, type Member };

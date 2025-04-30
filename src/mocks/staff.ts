@@ -31,7 +31,7 @@ export const staffHandlers = [
 				current_page: pageIndex,
 				page_size: pageSize,
 				total_records: total,
-				first_page: 1,
+				first_page: 0,
 				last_page: Math.ceil(total / pageSize),
 			},
 			staff: staff ?? [],
