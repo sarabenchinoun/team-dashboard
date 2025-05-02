@@ -1,7 +1,7 @@
 # Team Dashboard
 
 ## Overview
-This project is a staff dashboard built for BRR Media’s Frontend Developer (React) / IT Support role technical assessment. It features a responsive, type-safe UI with five core pages (Dashboard, Staff Directory, IT Request, Tickets, To-Do List), implemented using Tanstack Router, TypeScript, Tailwind CSS, MSW for mock APIs, and shadcn/ui for polished components.
+This project is a staff dashboard built for BRR Media’s Frontend Developer (React) / IT Support role technical assessment. It features a responsive, type-safe UI with five core pages (Dashboard, Staff Directory, IT Request, Tickets, To-Do List) and advanced functionalities, implemented using Tanstack Router, TypeScript, Tailwind CSS, MSW for mock APIs, shadcn/ui for polished components, and React Query for efficient data fetching.
 
 ## Setup Instructions
 
@@ -15,6 +15,8 @@ Clone the Repository:
 Install Dependencies:
 
 ```pnpm install```
+
+Note: The project uses pnpm internally, but npm is compatible for setup. If you prefer to use npm, delete the `pnpm-lock.yaml` file.
 
 
 Start the Development local server:
@@ -34,22 +36,70 @@ Start the Development local server:
 - To-Do List
 
 
-Bonus Features:
-- TypeScript: Type safety for all components and pages.
-- Tanstack Router: File-based routing for seamless navigation.
-- Tailwind CSS: Responsive, utility-first styling for all pages.
-- shadcn/ui: Accessible, customizable components.
+## Features Completed
+
+### Dashboard:
+- Welcome banner with a clean, branded header.
+- Summary cards displaying open tickets and pending tasks, fetched via React Query.
+- Navigation links to all pages using Tanstack Router.
+### Staff Directory:
+  - Responsive table listing staff details (Name, Role, Email, Status).
+  - Bonus: Displays Google Workspace info (Last Login, Drive Usage, Device Type) from mock API.
+  - Pagination (5 items per page) with metadata (total items, pages).
+  - Loading skeletons for improved UX during data fetching.
+### IT Request: 
+  - Form with Issue Type and Status dropdowns (custom Select component), Description textarea, and file input.
+  - Async submission to /api/tickets via MSW, with Zod validation for input integrity.
+  - File upload support with console logging and Toaster notifications for submission status.
+  - Loading spinner and responsive Tailwind styling.
+### Tickets:
+  - Table listing tickets (Issue Name, Type, Status, etc.) with color-coded status badges.
+  - Pagination (5 items per page) with metadata response.
+  - Enhanced display with issue type and status mapping.
+  - Loading skeletons for smooth UX.
+### To-Do List:
+  - Add, edit, delete, and fetch tasks via MSW (/api/todos with create, update, delete, get actions).
+  - Mark tasks as complete with checkboxes.
+  - Loading skeletons and empty state (“No tasks”) for polish.
+### Bonus Features: 
+  - TypeScript: Type-safe interfaces for Staff, Ticket, and Task, with Tanstack Router’s type-safe routing.
+  - Tanstack Router: Client-side, file-based routing for seamless navigation without server-side rendering, with data preloading on hover for better UX.
+  - Tailwind CSS: Responsive, utility-first styling across all pages.
+  - shadcn/ui: Accessible components (Card, Button, Form, Select, Table, Textarea, Toaster).
+  - React Query: Efficient data fetching with useQuery, replacing useEffect for async logic.
+  - Zod: Schema validation for IT Request form inputs.
+  - UX Enhancements: Skeleton component for loading states, Toaster for notifications, Triangle Alert icon, custom Select component, and Radix UI Tooltip for interactivity.
+  - Accessibility: ARIA labels for pagination buttons and form elements, improved input/textarea styling.
 
 
 
 ## Technical Stack
 
-**Framework**: React with Tanstack Router (file-based routing).
+**Framework**: React with Tanstack Router (file-based, type-safe client-side routing).
 
 **Language**: TypeScript for type safety.
 
 **Styling**: Tailwind CSS for responsive, utility-first design.
 
-**Data**: MSW for mocking API endpoints and simulating realistic responses.
+**Data**: MSW for mocking API endpoints and simulating realistic responses. Mocking /api/staff, /api/tickets, and /api/todos endpoints.
 
-**Components**: shadcn/ui for polished, accessible UI components.  
+**Data Fetching**: React Query (useQuery) for efficient, declarative async operations.
+
+**Validation**: Zod for form input validation.
+**Components**:  shadcn/ui for polished, accessible UI components (Card, Button, Form, Select, Table, Textarea, Toaster).
+
+**Utilities**: Radix UI for Tooltip, Sonner for Toaster, Faker for mock data seeding.
+
+
+## Future Improvements
+
+With additional time, I would:
+
+- Add unit tests using Vitest to cover components (e.g., StaffCard, TicketRow, TaskItem).
+
+- Enable downloadable files in the Tickets table for uploaded attachments.
+
+- Add sorting for Staff Directory and Tickets tables by columns (e.g., Name, Status).
+
+
+Thank you for reviewing my submission! I’m excited about the opportunity to contribute to BRR Media’s high-impact webcast solutions.
