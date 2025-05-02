@@ -263,6 +263,9 @@ function TodoItem({
 		onSuccess: async () => {
 			await queryClient.invalidateQueries(todosQuery());
 			setEditing(false);
+			toast("Todo updated successfully", {
+				description: "Your todo has been updated successfully.",
+			});
 		},
 	});
 

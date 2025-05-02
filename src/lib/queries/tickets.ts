@@ -26,6 +26,7 @@ export async function getTickets(params: Partial<PageParams> = {}) {
 					issue: z.string(),
 					description: z.string(),
 					status: z.string(),
+					file: z.string().optional().nullable(),
 					created_at: z.string(),
 				}),
 			),

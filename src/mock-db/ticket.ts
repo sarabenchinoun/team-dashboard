@@ -34,6 +34,7 @@ const Ticket = z.object({
 	issue: z.string(),
 	description: z.string(),
 	status: z.string(),
+	file: z.string().optional().nullable(),
 	created_at: z.string(),
 });
 
@@ -45,6 +46,7 @@ const createTicket = (overrides: Partial<Ticket> = {}) =>
 		issue: faker.helpers.arrayElement(issuetypes.map((i) => i.value)),
 		description: faker.lorem.sentence(),
 		status: faker.helpers.arrayElement(ticketStatuses.map((s) => s.value)),
+		file: faker.helpers.arrayElement([null, faker.system.fileName()]),
 		created_at: faker.date.past().toISOString(),
 		...overrides,
 	});

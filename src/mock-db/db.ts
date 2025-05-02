@@ -1,4 +1,4 @@
-import { factory, primaryKey } from "@mswjs/data";
+import { factory, nullable, primaryKey } from "@mswjs/data";
 
 const asscendingId = (() => {
 	let id = 1;
@@ -28,7 +28,7 @@ export const db = factory({
 		issue: String,
 		description: String,
 		status: String,
-		file: String,
+		file: nullable(String),
 		created_at: () => new Date().toISOString(),
 	},
 	todo: {

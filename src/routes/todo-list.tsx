@@ -11,12 +11,12 @@ function RouteComponent() {
 	const { data } = useQuery(todosQuery());
 
 	return (
-		<div className="p-2">
-			<div className="flex flex-col gap-x-4 gap-y-2 sm:flex-row sm:items-center">
+		<div className="mx-auto max-w-2xl p-2 ">
+			<div className="flex flex-col justify-between gap-x-4 gap-y-2 sm:flex-row sm:items-center">
 				<h1 className="font-bold text-2xl">To-do List</h1>
 				<AddTodo />
 			</div>
-			<div className="max-w-2xl py-6">
+			<div className="py-6">
 				<div className="space-y-2">
 					{data?.todos.map((todo) => (
 						<TodoItem key={todo.id} {...todo} />

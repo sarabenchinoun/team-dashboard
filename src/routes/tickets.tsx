@@ -96,6 +96,16 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
 			);
 		},
 	},
+	{
+		accessorKey: "file",
+		header: "File Name",
+		cell: ({ row }) => {
+			const { file } = row.original;
+			const truncated =
+				file && file.length > 20 ? `${file.slice(0, 20)}…` : file;
+			return <span>{truncated}</span>;
+		},
+	},
 ];
 
 export function TicketsTable() {
