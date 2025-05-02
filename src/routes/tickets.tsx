@@ -3,6 +3,7 @@ import { createFileRoute, stripSearchParams } from "@tanstack/react-router";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -122,7 +123,7 @@ export function TicketsTable() {
 	const search = Route.useSearch();
 	const navigate = Route.useNavigate(); // Get the current search params so we can navigate with them
 
-	const { data } = useQuery(ticketsQuery(search));
+	const { data, isLoading } = useQuery(ticketsQuery(search));
 
 	const paginationState = {
 		pageIndex: search.pageIndex ?? 0,
@@ -176,7 +177,17 @@ export function TicketsTable() {
 						))}
 					</TableHeader>
 					<TableBody>
-						{table.getRowModel().rows?.length ? (
+						{isLoading ? (
+							Array.from({ length: 6 }).map((_, i) => (
+								<TableRow key={`skeleton-${i}`}>
+									{ticketsColumns.map((_, j) => (
+										<TableCell key={j}>
+											<Skeleton className="h-4 w-full" />
+										</TableCell>
+									))}
+								</TableRow>
+							))
+						) : table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}

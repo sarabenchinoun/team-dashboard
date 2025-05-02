@@ -9,6 +9,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Table,
 	TableBody,
@@ -99,7 +100,7 @@ export function StaffTable() {
 	const search = Route.useSearch();
 	const navigate = Route.useNavigate(); // Get the current search params so we can navigate with them
 
-	const { data } = useQuery(membersQuery(search));
+	const { data, isLoading } = useQuery(membersQuery(search));
 
 	const paginationState = {
 		pageIndex: search.pageIndex ?? 0,
@@ -153,7 +154,17 @@ export function StaffTable() {
 						))}
 					</TableHeader>
 					<TableBody>
-						{table.getRowModel().rows?.length ? (
+						{isLoading ? (
+							Array.from({ length: 6 }).map((_, i) => (
+								<TableRow key={`skeleton-${i}`}>
+									{staffColumns.map((_, j) => (
+										<TableCell key={j}>
+											<Skeleton className="h-4 w-full" />
+										</TableCell>
+									))}
+								</TableRow>
+							))
+						) : table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}

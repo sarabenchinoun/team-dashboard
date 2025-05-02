@@ -1,4 +1,5 @@
 import { AddTodo, TodoItem } from "@/components/todo-actions";
+import { Skeleton } from "@/components/ui/skeleton";
 import { todosQuery } from "@/lib/queries/todos";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -8,7 +9,7 @@ export const Route = createFileRoute("/todo-list")({
 });
 
 function RouteComponent() {
-	const { data } = useQuery(todosQuery());
+	const { data, isLoading } = useQuery(todosQuery());
 
 	return (
 		<div className="mx-auto max-w-2xl p-2 ">
@@ -18,9 +19,17 @@ function RouteComponent() {
 			</div>
 			<div className="py-6">
 				<div className="space-y-2">
-					{data?.todos.map((todo) => (
-						<TodoItem key={todo.id} {...todo} />
-					))}
+					{isLoading ? (
+						Array.from({ length: 6 }).map((_, i) => (
+							<Skeleton key={i} className="h-10 w-full rounded" />
+						))
+					) : data?.todos.length ? (
+						data.todos.map((todo) => <TodoItem key={todo.id} {...todo} />)
+					) : (
+						<div className="py-8 text-center text-muted-foreground">
+							No todos found.
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
