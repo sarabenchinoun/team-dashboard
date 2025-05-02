@@ -1,7 +1,9 @@
 # Team Dashboard
 
 ## Overview
-This project is a staff dashboard built for BRR Media’s Frontend Developer (React) / IT Support role technical assessment. It features a responsive, type-safe UI with five core pages (Dashboard, Staff Directory, IT Request, Tickets, To-Do List) and advanced functionalities, implemented using Tanstack Router, TypeScript, Tailwind CSS, MSW for mock APIs, shadcn/ui for polished components, and React Query for efficient data fetching.
+This project is a staff dashboard for a fictional IT department, designed to streamline staff management and IT requests. It serves as a comprehensive tool for tracking tickets, managing tasks, and facilitating communication within the team.
+
+It features a responsive, type-safe UI with five core pages (Dashboard, Staff Directory, IT Request, Tickets, To-Do List) and advanced functionalities, implemented using Tanstack Router, TypeScript, Tailwind CSS, MSW for mock APIs, shadcn/ui for polished components, and React Query for efficient data fetching.
 
 ## Setup Instructions
 
@@ -100,6 +102,3 @@ With additional time, I would:
 - Enable downloadable files in the Tickets table for uploaded attachments.
 
 - Add sorting for Staff Directory and Tickets tables by columns (e.g., Name, Status).
-
-
-Thank you for reviewing my submission! I’m excited about the opportunity to contribute to BRR Media’s high-impact webcast solutions.

@@ -120,7 +120,7 @@ function RouteComponent() {
 												User Email
 											</label>
 											<Input
-												placeholder="example@brrmedia.com"
+												placeholder="example@icloud.com"
 												id={field.name}
 												name={field.name}
 												value={field.state.value}
