@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, delay } from "msw";
 import * as z from "zod";
 
 import { db } from "@/mock-db/db";
@@ -25,6 +25,8 @@ export const staffHandlers = [
 			skip: skip,
 			orderBy: { created_at: "desc" },
 		});
+
+		delay(1000);
 
 		return HttpResponse.json({
 			metadata: {

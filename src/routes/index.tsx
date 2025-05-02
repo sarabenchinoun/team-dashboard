@@ -16,17 +16,21 @@ import { ticketsQuery } from "@/lib/queries/tickets";
 import { todosQuery } from "@/lib/queries/todos";
 import { issuetypes, ticketStatuses } from "@/mock-db/ticket";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
+	loader: ({ context }) => {
+		context.queryClient.ensureQueryData(ticketsQuery());
+		context.queryClient.ensureQueryData(todosQuery());
+	},
 	component: Index,
 });
 
 function Index() {
-	const { data: tickets_data, isLoading: ticketsLoading } = useQuery(
+	const { data: tickets_data, isPending: ticketsLoading } = useQuery(
 		ticketsQuery({ pageIndex: 0, pageSize: 100 }),
 	);
-	const { data: todos_data, isLoading: todosLoading } = useQuery(todosQuery());
+	const { data: todos_data, isPending: todosLoading } = useQuery(todosQuery());
 
 	const tickets = tickets_data?.tickets;
 	const todos = todos_data?.todos;
@@ -62,10 +66,10 @@ function Index() {
 				</div>
 				<div className="mt-4 md:mt-0">
 					<Button variant="ghost" size="sm" asChild>
-						<a href="/it-request">
+						<Link to="/it-request">
 							<Icon name="plus" className="h-4 w-4" />
 							New Ticket
-						</a>
+						</Link>
 					</Button>
 				</div>
 			</div>

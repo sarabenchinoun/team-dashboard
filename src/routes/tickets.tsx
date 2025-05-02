@@ -32,6 +32,9 @@ export const Route = createFileRoute("/tickets")({
 	search: {
 		middlewares: [stripSearchParams(defaultPageParams)],
 	},
+	beforeLoad: ({ context }) => {
+		context.queryClient.ensureQueryData(ticketsQuery());
+	},
 	component: RouteComponent,
 });
 
@@ -123,7 +126,7 @@ export function TicketsTable() {
 	const search = Route.useSearch();
 	const navigate = Route.useNavigate(); // Get the current search params so we can navigate with them
 
-	const { data, isLoading } = useQuery(ticketsQuery(search));
+	const { data, isPending } = useQuery(ticketsQuery(search));
 
 	const paginationState = {
 		pageIndex: search.pageIndex ?? 0,
@@ -177,7 +180,7 @@ export function TicketsTable() {
 						))}
 					</TableHeader>
 					<TableBody>
-						{isLoading ? (
+						{isPending ? (
 							Array.from({ length: 6 }).map((_, i) => (
 								<TableRow key={`skeleton-${i}`}>
 									{ticketsColumns.map((_, j) => (

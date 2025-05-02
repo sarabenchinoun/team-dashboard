@@ -28,6 +28,9 @@ export const Route = createFileRoute("/staff-directory")({
 	search: {
 		middlewares: [stripSearchParams(defaultPageParams)],
 	},
+	beforeLoad: ({ context }) => {
+		context.queryClient.ensureQueryData(membersQuery());
+	},
 	component: RouteComponent,
 });
 
@@ -100,7 +103,7 @@ export function StaffTable() {
 	const search = Route.useSearch();
 	const navigate = Route.useNavigate(); // Get the current search params so we can navigate with them
 
-	const { data, isLoading } = useQuery(membersQuery(search));
+	const { data, isPending } = useQuery(membersQuery(search));
 
 	const paginationState = {
 		pageIndex: search.pageIndex ?? 0,
@@ -154,7 +157,7 @@ export function StaffTable() {
 						))}
 					</TableHeader>
 					<TableBody>
-						{isLoading ? (
+						{isPending ? (
 							Array.from({ length: 6 }).map((_, i) => (
 								<TableRow key={`skeleton-${i}`}>
 									{staffColumns.map((_, j) => (

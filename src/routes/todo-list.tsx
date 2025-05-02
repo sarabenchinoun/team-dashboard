@@ -5,11 +5,14 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/todo-list")({
+	beforeLoad: ({ context }) => {
+		context.queryClient.ensureQueryData(todosQuery());
+	},
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { data, isLoading } = useQuery(todosQuery());
+	const { data, isPending } = useQuery(todosQuery());
 
 	return (
 		<div className="mx-auto max-w-2xl p-2 ">
@@ -19,7 +22,7 @@ function RouteComponent() {
 			</div>
 			<div className="py-6">
 				<div className="space-y-2">
-					{isLoading ? (
+					{isPending ? (
 						Array.from({ length: 6 }).map((_, i) => (
 							<Skeleton key={i} className="h-10 w-full rounded" />
 						))

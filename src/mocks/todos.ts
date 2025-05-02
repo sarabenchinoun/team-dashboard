@@ -1,4 +1,4 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, delay } from "msw";
 import * as z from "zod";
 
 import { CreateTodo } from "@/lib/queries/todos";
@@ -8,6 +8,8 @@ import { mockApi } from "./browser";
 export const todosHandlers = [
 	http.get(mockApi("/todos"), () => {
 		const todos = db.todo.getAll();
+		delay(1000);
+
 		return HttpResponse.json({ todos: todos ?? [] });
 	}),
 	http.post(mockApi("/todos"), async ({ request }) => {
@@ -22,6 +24,7 @@ export const todosHandlers = [
 				{ status: 400 },
 			);
 		}
+		delay(1000);
 
 		return HttpResponse.json({ todo });
 	}),
@@ -43,6 +46,7 @@ export const todosHandlers = [
 				{ status: 400 },
 			);
 		}
+		delay(1000);
 
 		return HttpResponse.json({ todo });
 	}),
@@ -66,6 +70,7 @@ export const todosHandlers = [
 				{ status: 400 },
 			);
 		}
+		delay(1000);
 
 		return HttpResponse.json({ todo });
 	}),

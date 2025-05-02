@@ -1,6 +1,6 @@
 import { CreateTicket } from "@/lib/queries/tickets";
 import { db } from "@/mock-db/db";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, delay } from "msw";
 import * as z from "zod";
 import { mockApi } from "./browser";
 
@@ -25,6 +25,8 @@ export const ticketsHandlers = [
 			skip: skip,
 			orderBy: { created_at: "desc" },
 		});
+
+		delay(1000);
 
 		return HttpResponse.json({
 			metadata: {
@@ -61,6 +63,8 @@ export const ticketsHandlers = [
 				status: parsedBody.status,
 				file: parsedBody.file ? parsedBody.file.name : undefined,
 			});
+
+			delay(1000);
 
 			if (!ticket) {
 				return HttpResponse.json(

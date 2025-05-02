@@ -14,10 +14,17 @@ import {
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { navigationItems } from "@/lib/config";
-import { Outlet, createRootRoute } from "@tanstack/react-router";
+import type { QueryClient } from "@tanstack/react-query";
+import {
+	Link,
+	Outlet,
+	createRootRouteWithContext,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+	queryClient: QueryClient;
+}>()({
 	component: () => (
 		<>
 			<SidebarProvider>
@@ -26,12 +33,12 @@ export const Route = createRootRoute({
 						<SidebarMenu>
 							<SidebarMenuItem>
 								<SidebarMenuButton size="lg" asChild>
-									<a href="/">
+									<Link to="/">
 										<img src="/favicon.png" alt="Logo" className=" h-8 w-8" />
 										<div className=" flex-1 text-left text-lg leading-tight">
 											<span className="truncate font-semibold">Media</span>
 										</div>
-									</a>
+									</Link>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 						</SidebarMenu>
@@ -43,10 +50,10 @@ export const Route = createRootRoute({
 									{navigationItems.map((item) => (
 										<SidebarMenuItem key={item.title}>
 											<SidebarMenuButton asChild tooltip={item.title}>
-												<a href={item.url}>
+												<Link to={item.url}>
 													<Icon name={item.icon as IconProps["name"]} />
 													<span>{item.title}</span>
-												</a>
+												</Link>
 											</SidebarMenuButton>
 										</SidebarMenuItem>
 									))}
