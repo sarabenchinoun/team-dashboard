@@ -1,19 +1,28 @@
+import { AddTodo, TodoItem } from "@/components/todo-actions";
+import { todosQuery } from "@/lib/queries/todos";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-
-import { todosQuery } from "@/lib/queries/todos";
 
 export const Route = createFileRoute("/todo-list")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const todos = useQuery(todosQuery());
+	const { data } = useQuery(todosQuery());
 
 	return (
-		<>
-			<div>Hello "/todo-list"!</div>
-			<div>{JSON.stringify(todos, null, 2)}</div>
-		</>
+		<div className="p-2">
+			<div className="flex flex-col gap-x-4 gap-y-2 sm:flex-row sm:items-center">
+				<h1 className="font-bold text-2xl">To-do List</h1>
+				<AddTodo />
+			</div>
+			<div className="max-w-2xl py-6">
+				<div className="space-y-2">
+					{data?.todos.map((todo) => (
+						<TodoItem key={todo.id} {...todo} />
+					))}
+				</div>
+			</div>
+		</div>
 	);
 }

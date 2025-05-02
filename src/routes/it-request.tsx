@@ -16,6 +16,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { CreateTicket, postTicket } from "@/lib/queries/tickets";
 import { issuetypes, ticketStatuses } from "@/mock-db/ticket";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/it-request")({
@@ -23,15 +24,20 @@ export const Route = createFileRoute("/it-request")({
 });
 
 function RouteComponent() {
+	const navigate = Route.useNavigate();
+	// Tanstack has a weird issue with handling files
+	const [fileUpload, setFileUpload] = useState<File | null>(null);
+
 	const { mutate, isPending, isError, error } = useMutation({
 		mutationFn: postTicket,
-		meta: {
-			invalidates: ["tickets"],
-		},
-		onSuccess: () => {
+		onSuccess: async () => {
 			form.reset();
 			toast("Ticket created successfully", {
 				description: "Your ticket has been created successfully.",
+			});
+			await navigate({
+				to: "/tickets",
+				replace: true,
 			});
 		},
 	});
@@ -42,9 +48,18 @@ function RouteComponent() {
 			issue: "",
 			description: "",
 			status: "",
+			file: null,
 		},
 		onSubmit: ({ value }) => {
-			mutate(value);
+			const formData = new FormData();
+			formData.append("user", value.user);
+			formData.append("issue", value.issue);
+			formData.append("description", value.description);
+			formData.append("status", value.status);
+			if (fileUpload) {
+				formData.append("file", fileUpload);
+			}
+			mutate(formData);
 		},
 	});
 
@@ -70,6 +85,7 @@ function RouteComponent() {
 						event.stopPropagation();
 						void form.handleSubmit();
 					}}
+					encType="multipart/form-data"
 				>
 					<div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
 						<form.Field
@@ -214,30 +230,29 @@ function RouteComponent() {
 								);
 							}}
 						</form.Field>
-						{/* <form.Field
-						name="file"
-						validators={{ onChange: () => CreateTicket.shape.file }}
-					>
-						{(field) => {
-							return (
-								<div>
-									<label htmlFor={field.name}>File</label>
-									<Input
-										type="file"
-										id={field.name}
-										name={field.name}
-										onChange={(event) => {
-											const file = event.target.files?.[0];
-											if (file) {
-												 field.handleChange(file);
-											}
-										}}
-									/>
-									<FieldInfo field={field} />
-								</div>
-							);
-						}}
-					</form.Field> */}
+
+						<div className="sm:col-span-3">
+							<label
+								htmlFor="file-upload"
+								className="block font-medium text-gray-900 text-sm/6"
+							>
+								File
+							</label>
+							<div className="mt-2">
+								<Input
+									type="file"
+									id="file-upload"
+									name="file"
+									onChange={(e) => {
+										const file = e.target.files?.[0];
+										if (!file) {
+											return;
+										}
+										setFileUpload(file);
+									}}
+								/>
+							</div>
+						</div>
 					</div>
 					{isError && (
 						<div className="flex items-center gap-2">
@@ -270,9 +285,9 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 	return (
 		<>
 			{field.state.meta.isTouched && !field.state.meta.isValid ? (
-				<em className="mt-2 text-destructive">
+				<div className="mt-2 text-destructive">
 					{field.state.meta.errors[0].message}
-				</em>
+				</div>
 			) : null}
 			{field.state.meta.isValidating ? "Validating..." : null}
 		</>

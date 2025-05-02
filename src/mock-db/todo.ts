@@ -3,13 +3,13 @@ import * as z from "zod";
 
 import { db } from "./db";
 
-const TodoSchema = z.object({
+const Todo = z.object({
 	id: z.number(),
 	title: z.string(),
 	completed: z.boolean(),
 	created_at: z.string(),
 });
-type Todo = z.infer<typeof TodoSchema>;
+type Todo = z.infer<typeof Todo>;
 
 const createTodo = (overrides: Partial<Todo> = {}) =>
 	db.todo.create({
@@ -19,4 +19,4 @@ const createTodo = (overrides: Partial<Todo> = {}) =>
 		...overrides,
 	});
 
-export { createTodo };
+export { createTodo, type Todo };

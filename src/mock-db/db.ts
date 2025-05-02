@@ -28,6 +28,7 @@ export const db = factory({
 		issue: String,
 		description: String,
 		status: String,
+		file: String,
 		created_at: () => new Date().toISOString(),
 	},
 	todo: {
