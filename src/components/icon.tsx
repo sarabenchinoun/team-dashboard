@@ -1,7 +1,12 @@
 import { cn } from "@/lib/utils";
 import {
+	Activity,
+	Calendar,
+	ChartBar,
 	Check,
+	CheckSquare,
 	CircleHelp,
+	Clock,
 	House,
 	ListTodo,
 	LoaderCircle,
@@ -11,6 +16,8 @@ import {
 	Ticket,
 	Trash2,
 	TriangleAlert,
+	User2,
+	UserCircle,
 	Users,
 	X,
 } from "lucide-react";
@@ -24,10 +31,17 @@ const Icons = {
 	"loader-circle": LoaderCircle,
 	"triangle-alert": TriangleAlert,
 	check: Check,
+	"check-square": CheckSquare,
 	plus: Plus,
 	pen: Pen,
 	trash: Trash2,
 	x: X,
+	"chart-bar": ChartBar,
+	activity: Activity,
+	clock: Clock,
+	user: User2,
+	calendar: Calendar,
+	"user-circle": UserCircle,
 };
 export interface IconProps extends LucideProps {
 	name: keyof typeof Icons;

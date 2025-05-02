@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/tooltip";
 import { PageParams, defaultPageParams } from "@/lib/pagination";
 import { ticketsQuery } from "@/lib/queries/tickets";
-import type { Ticket } from "@/mock-db/ticket";
+import { type Ticket, issuetypes, ticketStatuses } from "@/mock-db/ticket";
 import {
 	type ColumnDef,
 	flexRender,
@@ -51,9 +51,13 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
 		header: "User / Issue",
 		cell: ({ row }) => {
 			const { user, issue } = row.original;
+			const issueTypeMap = Object.fromEntries(
+				issuetypes.map((i) => [i.value, i.label]),
+			);
+
 			return (
 				<div>
-					<div className="font-medium">{issue}</div>
+					<div className="font-medium">{issueTypeMap[issue] ?? issue}</div>
 					<div className="text-muted-foreground text-xs">{user}</div>
 				</div>
 			);
@@ -70,7 +74,13 @@ export const ticketsColumns: ColumnDef<Ticket>[] = [
 					: status === "pending"
 						? "warning"
 						: "secondary";
-			return <Badge variant={statusVariant}>{status}</Badge>;
+
+			const statusMap = Object.fromEntries(
+				ticketStatuses.map((s) => [s.value, s.label]),
+			);
+			return (
+				<Badge variant={statusVariant}>{statusMap[status] ?? status}</Badge>
+			);
 		},
 	},
 	{
